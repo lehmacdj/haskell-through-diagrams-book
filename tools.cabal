@@ -1,0 +1,30 @@
+name:                tools
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/lehmacdj/haskell-through-diagrams/tools#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Devin Lehmacher
+maintainer:          lehmacdj@gmail.com
+copyright:           Copyright: (c) 2017 Devin Lehmacher
+category:            Miscellaneous
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      tools/src
+  exposed-modules:
+  build-depends:       base >= 4.7 && < 5
+  default-language:    Haskell2010
+
+executable generate-skeleton
+  hs-source-dirs:      tools/bin
+  main-is:             generate-skeleton.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , tools
+                     , lens
+                     , directory
+  default-language:    Haskell2010

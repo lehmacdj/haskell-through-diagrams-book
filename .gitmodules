@@ -1,0 +1,3 @@
+[submodule "haskell-through-diagrams"]
+	path = haskell-through-diagrams
+	url = ./haskell-through-diagrams
