@@ -298,7 +298,7 @@ it does.
 `asinh` `acosh` `atanh` `abs` `div` `mod` `length` `sqrt` `exp`
 
 #### Operators
-`^` `**` `+` `-` `*` `/`
+`^` `**` `+` `-` `*` `/` `$` `>` `<` `/=` `==` `>=` `<=` `:` `++`
 
 #### Types
 `Integer` `Int` `Float` `Double` `Char` `String` `Bool`
