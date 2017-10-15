@@ -38,12 +38,16 @@ diagrams to try with `draw`.
 - change the opacity: `fillOpacity`
 
 > If you tried checking the type signature of any of the functions associated
-> with diagrams you might have noticed that they are absurdly complex. Don't
-> worry about this too much for now. We will discuss the type signatures in
-> greater detail when we discuss type signatures later. For now whenever I
-> introduce new functions I will give them mock type signatures describe what
-> the types are conceptually at a more concrete level. If I put a type in quotes
-> its not a real type just a word to describe what that type is.
+> with diagrams you might have noticed that they are absurdly complex. Not only
+> do they have constraints like the functions involving arithmetic that we saw
+> in the previous chapter but they also contain "type functions" and a lot of
+> other complicated things. Don't worry about this too much for now. We will
+> discuss the type signatures in greater detail when we discuss some of the more
+> advanced features of Haskell's type system later. For now whenever I introduce
+> new functions, with complicated type signatures, I will give them mock type
+> signatures describe what the types are conceptually at a more concrete level.
+> If I put a type in quotes its not a real type just a word to describe what
+> that type is.
 >
 > `fillColor :: "Color" -> "Diagram" -> "Diagram"`
 > `lineColor :: "Color" -> "Diagram" -> "Diagram"`
