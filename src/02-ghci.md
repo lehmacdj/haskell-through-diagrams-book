@@ -286,9 +286,10 @@ expressions as demonstrated here:
 ```
 
 This will help you get a sense of what types certain expressions have and how
-you can build your own expressions. I checking the type of the function or
-operator before trying to put it in expressions if you aren't exactly sure what
-it does.
+you can build your own expressions. Try checking the type of the function or
+operator before trying to use it in expressions if you aren't exactly sure what
+it does. Another helpful command in GHCi is `:info` which will show you a bunch
+of information and documentation about whatever you throw at it.
 
 #### Values
 `True` `False` `pi`
