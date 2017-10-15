@@ -5,6 +5,8 @@ Diagrams**.
 
 `diagrams` is a Haskell library for drawing graphics.
 
+## Primitives
+
 Load up GHCi while in the project directory then try the following.
 
 ```
@@ -25,6 +27,8 @@ Those were all just outlines. What if we want a filled shape instead?
 > `draw` is the same as `rendered "tmp"`. It exists to make it easier to iterate
 > on diagrams for the purpose of this tutorial. You can just open it in a
 > browser and refresh every time you use `draw` again.
+
+## Modifiers
 
 Diagrams are crafted by taking simple diagrams and modifying them using
 functions.
@@ -62,6 +66,8 @@ diagrams to try with `draw`.
 > with a hint of purple" would be written `C.blueWithAHintOfPurple`. You can
 > also use arbitrary RGB colors like `sRGB 0 0.5 1.0` (with color components
 > from 0 - 1.0) or `sRGB24 255 0 127` (color components ranging from 0 - 255).
+
+## Combiners
 
 Lets try combining some diagrams now to make something a little more complex
 than a single shape. Because there are a number of different ways to combine
@@ -106,9 +112,59 @@ is why the third example works properly.
 > to be able to check the type. This also works when applying operators, for
 > example `(+) 1 2` evaluates to `3`.
 
+## Transformations
+
 Now we know how to create diagrams, combine them, and color them. As far as
 manipulating pictures goes it seems we are only missing one major thing:
 transforming diagrams. We can translate, reflect, rotate, and scale diagrams
 using functions with the following signatures:
 
-<!-- get these functions from https://archives.haskell.org/projects.haskell.org/diagrams/doc/quickstart.html#transforming-diagrams -->
+```
+scale :: "Double" -> "Diagram" -> "Diagram"
+rotate :: "Angle" -> "Diagram" -> "Diagram"
+translate :: "Vector" -> "Diagram" -> "Diagram"
+```
+
+Now since those function signatures aren't exactly as enlightening as we might
+like them to be, here is a little section on each one.
+
+### `scale`
+This scales a diagram by some amount, uniformly, in every dimension. If you
+noticed earlier, each of the primitive shapes does the same thing (e.g. `square
+0.5 = square 1 # scale 0.5`). If you want to scale a shape by one dimension, you
+can do that with `scaleX` and `scaleY`, which work exactly how you probably
+expect.
+
+### `rotate`
+This rotates a diagram by an angle. What is an angle? An angle is basically a
+floating point number along with the unit of the angle. There are 3 different
+units that you can use for your angles.
+
+```
+λ> 1 @@ turn
+6.283185307179586 @@ rad
+λ> 360 @@ deg
+6.283185307179586 @@ rad
+λ> 2 * pi @@ rad
+6.283185307179586 @@ rad
+```
+
+> `(@@)` is a weird operator that is used to append an operator to a number by
+> diagrams. Please don't ask to me to explain its type until at least 5 chapters
+> from now...
+
+Internally all angles use radians. There are also a few common angles provided:
+`fullTurn`, `halfTurn`, `quarterTurn`. If you just want to rotate by turns (aka
+multiples of τ), you can use the function `rotateBy :: "Double" -> "Diagram" ->
+"Diagram"`.
+
+### `translate`
+This translates the local origin of a diagram to a new vector, using the current
+local coordinate system.
+
+#### Local Origins
+You can show the origin of a diagram by using `showOrigin`.
+
+TODO: add images, exercises, finish section on translate, and section on
+transformations with a section on combining transformations to create bigger
+combinations
