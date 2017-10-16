@@ -3,5 +3,8 @@ Introduction
 Getting Started
 GHCi
 Basic Diagrams
-Recursion
+Lists
+Monoids
+Maybe
 Functors
+Stepping Outside of the Repl
