@@ -204,7 +204,7 @@ list of `t`s. There are `Fractional` numbers.
 > (that also fulfills what ever it is constrained by). For example we could also
 > write `1`'s type as `Num x => x`.
 
-We can also get the types of functions:
+We can also check the types of functions:
 
 ```
 λ> :t log
