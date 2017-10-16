@@ -11,18 +11,29 @@ Load up GHCi while in the project directory then try the following.
 
 ```
 λ> rendered "triangle" (triangle 1)
+```
+<img alt="triangle" src="img/03-01-triangle.svg" class="center" />
+
+```
 λ> rendered "circle" (circle 1)
+```
+<img alt="circle" src="img/03-02-circle.svg" class="center" />
+
+```
 λ> rendered "pentagon" (pentagon 1)
 ```
+<img alt="pentagon" src="img/03-03-pentagon.svg" class="center" />
 
 Open "diagrams/triangle.svg", "diagrams/circle.svg", and
 "diagrams/pentagon.svg" and you should see a triangle, circle, and a pentagon.
+Just as shown above.
 
 Those were all just outlines. What if we want a filled shape instead?
 
 ```
 λ> draw (fillColor black (triangle 1))
 ```
+<img alt="filled triangle" src="img/03-04-filled-triangle.svg" class="center" />
 
 > `draw` is the same as `rendered "tmp"`. It exists to make it easier to iterate
 > on diagrams for the purpose of this tutorial. You can just open it in a
@@ -55,7 +66,7 @@ diagrams to try with `draw`.
 >
 > `fillColor :: "Color" -> "Diagram" -> "Diagram"`
 > `lineColor :: "Color" -> "Diagram" -> "Diagram"`
-> `fillOpacity :: Double -> "Diagram" -> "Diagram"`
+> `fillOpacity :: "Double" -> "Diagram" -> "Diagram"`
 
 > A complete list of the default colors can be found
 > [here](http://hackage.haskell.org/package/colour-2.3.3/docs/Data-Colour-Names.html).
@@ -116,11 +127,11 @@ is why the third example works properly.
 
 Now we know how to create diagrams, combine them, and color them. As far as
 manipulating pictures goes it seems we are only missing one major thing:
-transforming diagrams. We can translate, reflect, rotate, and scale diagrams
+transforming diagrams. We can translate, rotate, and scale diagrams
 using functions with the following signatures:
 
 ```
-scale :: "Double" -> "Diagram" -> "Diagram"
+scale :: "Size" -> "Diagram" -> "Diagram"
 rotate :: "Angle" -> "Diagram" -> "Diagram"
 translate :: "Vector" -> "Diagram" -> "Diagram"
 ```
@@ -155,16 +166,154 @@ units that you can use for your angles.
 
 Internally all angles use radians. There are also a few common angles provided:
 `fullTurn`, `halfTurn`, `quarterTurn`. If you just want to rotate by turns (aka
-multiples of τ), you can use the function `rotateBy :: "Double" -> "Diagram" ->
+multiples of τ), you can use the function `rotateBy :: "Size" -> "Diagram" ->
 "Diagram"`.
 
 ### `translate`
 This translates the local origin of a diagram to a new vector, using the current
-local coordinate system.
+local coordinate system. First we construct a vector to pass to translate.
 
-#### Local Origins
-You can show the origin of a diagram by using `showOrigin`.
+```
+λ> r2 (1, 1.5)
+V2 1.0 1.5
+```
 
-TODO: add images, exercises, finish section on translate, and section on
-transformations with a section on combining transformations to create bigger
-combinations
+Next it is important to understand what the local origin of a diagram is and
+what it does. You can show the origin of a diagram by using `showOrigin ::
+"Diagram" -> "Diagram"`. The local origin starts at the center for primitive
+diagrams.
+
+```
+λ> draw $ showOrigin $ square 1
+```
+<img alt="square with origin" src="img/03-05-square-origin.svg" class="center" />
+
+However when combining diagrams the original origin is maintained.
+
+```
+λ> draw $ showOrigin $ circle 1 ||| square 1
+```
+<img alt="circle and square with origin" src="img/03-06-circle-square-origin.svg" class="center" />
+
+Using translate moves the local origin, relative to where the local origin used
+to be at.
+
+```
+λ> draw $ showOrigin $ circle 1 # translate (r2 (0.5, 0.5))
+```
+<img alt="circle and square with translated origin" src="img/03-07-translated-origin.svg" class="center" />
+
+But when we combine a translated image with another, it doesn't appear like the
+translation had any effect at all.
+
+```
+λ> draw $ circle 1 ||| circle 1 # translate (r2 (0.5, 0.5))
+```
+<img alt="combined translated circles" src="img/03-08-combined-translated.svg" class="center" />
+
+However, when we combine images with `<>` the translation does actually have an
+effect.
+
+```
+λ> draw $ circle 1 <> circle 1 # translate (r2 (0.5, 0.5))
+```
+<img alt="atop translated circles" src="img/03-09-atop-translated.svg" class="center" />
+
+So using `<>` in addition with `translate` it is in fact possible to combine
+diagrams however you want, and position them as exactly as desired, to pixel
+perfect precision.
+
+### Composing Transformations
+Now that you know how to transform diagrams in a variety of ways, you may find
+yourself desiring a function that does several transformations at once. This is
+quite easy to accomplish using `.` the function composition operator.
+
+```
+λ> let reflectX =
+```
+
+> Remember we used `let` in the previous chapter to declare intermediate
+> variables.
+
+## Try It
+Now you know how to do a lot of different things with diagrams, and it is time
+to create a few on your own. I provide a few diagrams as goals that you might
+try to create. You can find the code that I used to generate the diagrams
+provided in the file `src/Diagrams/Book/Chapter3.hs`, each as a single
+definition with the name I have given it here. Before cheating though, seriously
+try to make the diagram your self first. I don't think any of the ones here
+would be too hard to make. A glossary of functions is available below the
+exercises for reference.
+
+ex1
+<img alt="ex1" src="img/03-ex-01.svg" class="center" />
+
+ex2
+<img alt="ex2" src="img/03-ex-02.svg" class="center" />
+
+ex3
+<img alt="ex3" src="img/03-ex-03.svg" class="center" />
+
+ex4
+<img alt="ex4" src="img/03-ex-04.svg" class="center" />
+
+ex5
+<img alt="ex5" src="img/03-ex-05.svg" class="center" />
+
+## Glossary
+Here is a list of functions that I used in this chapter, or very similar
+functions that you should be able to easily figure out how to use.
+
+### Primitive Shapes
+```
+triangle :: "Size" -> "Diagram"
+square :: "Size" -> "Diagram"
+pentagon :: "Size" -> "Diagram"
+hexagon :: "Size" -> "Diagram"
+regPoly :: Int -> "Size" -> "Diagram"
+rect :: "Size" -> "Size" -> "Diagram"
+roundedRect :: "Size" -> "Size" -> "Size" -> "Diagram"
+circle :: "Size" -> "Diagram"
+elipse :: "Size" -> "Diagram"
+elipseXY :: "Size" -> "Size" -> "Diagram"
+```
+
+### Aesthetic Modification
+```
+fillColor :: "Color" -> "Diagram" -> "Diagram"
+fc :: "Color" -> "Diagram" -> "Diagram"
+lineColor :: "Color" -> "Diagram" -> "Diagram"
+lc :: "Color" -> "Diagram" -> "Diagram"
+fillOpacity :: Double -> "Diagram" -> "Diagram"
+```
+
+### Combiners
+```
+atop :: "Diagram" -> "Diagram" -> "Diagram"
+beneath :: "Diagram" -> "Diagram" -> "Diagram"
+(<>) :: "Diagram" -> "Diagram" -> "Diagram"
+beside :: "Vector" -> "Diagram" -> "Diagram" -> "Diagram"
+(|||) :: "Diagram" -> "Diagram" -> "Diagram"
+(===) :: "Diagram" -> "Diagram" -> "Diagram"
+```
+
+### Transformations
+```
+scale :: "Size" -> "Diagram" -> "Diagram"
+scaleX :: "Size" -> "Diagram" -> "Diagram"
+scaleY :: "Size" -> "Diagram" -> "Diagram"
+translate :: "Vector" -> "Diagram" -> "Diagram"
+translateX :: "Size" -> "Diagram" -> "Diagram"
+translateY :: "Size" -> "Diagram" -> "Diagram"
+rotate :: "Angle" -> "Diagram" -> "Diagram"
+rotateBy :: "Size" -> "Diagram" -> "Diagram"
+reflectX :: "Diagram" -> "Diagram"
+reflectY :: "Diagram" -> "Diagram"
+```
+
+### Debugging Diagrams
+```
+showEnvelope :: "Diagram" -> "Diagram"
+showOrigin :: "Diagram" -> "Diagram"
+showTrace :: "Diagram" -> "Diagram"
+```
