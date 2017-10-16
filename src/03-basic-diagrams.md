@@ -204,15 +204,17 @@ to be at.
 <img alt="circle and square with translated origin" src="img/03-07-translated-origin.svg" class="center" />
 
 But when we combine a translated image with another, it doesn't appear like the
-translation had any effect at all.
+translation had the effect we expected exactly. It will be a little while before
+we know enough to understand what is going on here exactly.
 
 ```
 λ> draw $ circle 1 ||| circle 1 # translate (r2 (0.5, 0.5))
 ```
 <img alt="combined translated circles" src="img/03-08-combined-translated.svg" class="center" />
 
-However, when we combine images with `<>` the translation does actually have an
-effect.
+However, when we combine images with `<>` the translation has exactly the effect
+we expected. The local origins of the two diagrams are placed on top of one
+another.
 
 ```
 λ> draw $ circle 1 <> circle 1 # translate (r2 (0.5, 0.5))
@@ -229,8 +231,10 @@ yourself desiring a function that does several transformations at once. This is
 quite easy to accomplish using `.` the function composition operator.
 
 ```
-λ> let reflectX =
+λ> let scaleThenMove = translate (r2 (0.5, 0)) . scale 0.5
+λ> draw $ circle 1 <> circle 1 # scaleThenMove
 ```
+<img alt="two circles" src="img/03-10-two-circles.svg" class="center" />
 
 > Remember we used `let` in the previous chapter to declare intermediate
 > variables.
@@ -267,53 +271,111 @@ functions that you should be able to easily figure out how to use.
 ### Primitive Shapes
 ```
 triangle :: "Size" -> "Diagram"
+```
+```
 square :: "Size" -> "Diagram"
+```
+```
 pentagon :: "Size" -> "Diagram"
+```
+```
 hexagon :: "Size" -> "Diagram"
+```
+```
 regPoly :: Int -> "Size" -> "Diagram"
+```
+```
 rect :: "Size" -> "Size" -> "Diagram"
+```
+```
 roundedRect :: "Size" -> "Size" -> "Size" -> "Diagram"
+```
+```
 circle :: "Size" -> "Diagram"
+```
+```
 elipse :: "Size" -> "Diagram"
+```
+```
 elipseXY :: "Size" -> "Size" -> "Diagram"
 ```
 
 ### Aesthetic Modification
 ```
 fillColor :: "Color" -> "Diagram" -> "Diagram"
+```
+```
 fc :: "Color" -> "Diagram" -> "Diagram"
+```
+```
 lineColor :: "Color" -> "Diagram" -> "Diagram"
+```
+```
 lc :: "Color" -> "Diagram" -> "Diagram"
+```
+```
 fillOpacity :: Double -> "Diagram" -> "Diagram"
 ```
 
 ### Combiners
 ```
 atop :: "Diagram" -> "Diagram" -> "Diagram"
+```
+```
 beneath :: "Diagram" -> "Diagram" -> "Diagram"
+```
+```
 (<>) :: "Diagram" -> "Diagram" -> "Diagram"
+```
+```
 beside :: "Vector" -> "Diagram" -> "Diagram" -> "Diagram"
+```
+```
 (|||) :: "Diagram" -> "Diagram" -> "Diagram"
+```
+```
 (===) :: "Diagram" -> "Diagram" -> "Diagram"
 ```
 
 ### Transformations
 ```
 scale :: "Size" -> "Diagram" -> "Diagram"
+```
+```
 scaleX :: "Size" -> "Diagram" -> "Diagram"
+```
+```
 scaleY :: "Size" -> "Diagram" -> "Diagram"
+```
+```
 translate :: "Vector" -> "Diagram" -> "Diagram"
+```
+```
 translateX :: "Size" -> "Diagram" -> "Diagram"
+```
+```
 translateY :: "Size" -> "Diagram" -> "Diagram"
+```
+```
 rotate :: "Angle" -> "Diagram" -> "Diagram"
+```
+```
 rotateBy :: "Size" -> "Diagram" -> "Diagram"
+```
+```
 reflectX :: "Diagram" -> "Diagram"
+```
+```
 reflectY :: "Diagram" -> "Diagram"
 ```
 
 ### Debugging Diagrams
 ```
 showEnvelope :: "Diagram" -> "Diagram"
+```
+```
 showOrigin :: "Diagram" -> "Diagram"
+```
+```
 showTrace :: "Diagram" -> "Diagram"
 ```
