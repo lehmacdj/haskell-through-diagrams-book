@@ -4,7 +4,7 @@ set -e
 mdbook build
 git checkout gh-pages
 mv book .book
-rm -rf ./*
+rm -rf -- *
 mv .book/* .
 rmdir .book
 git add . || :
