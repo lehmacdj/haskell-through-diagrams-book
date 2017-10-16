@@ -7,7 +7,7 @@ mv book .book
 rm -rf ./*
 mv .book/* .
 rmdir .book
-git add .
-git commit -m "update published book pages"
-git push
+git add . || :
+git commit -m "update published book pages" || :
+git push || :
 git checkout master
