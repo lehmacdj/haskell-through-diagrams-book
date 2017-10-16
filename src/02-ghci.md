@@ -3,7 +3,7 @@
 ## Using GHCi
 GHCi is an interactive environment for running Haskell code. You can use it by
 typing `stack ghci`. If you use `stack ghci` inside of the project directory for
-this book, some definitions from this book will also be loaded. We won't need
+this book, some definitions for this book will also be loaded. We won't need
 them right now, but will need them later once we start writing functions.
 
 ## GHCi as a Calculator
