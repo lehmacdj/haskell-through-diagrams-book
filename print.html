@@ -1,0 +1,690 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Haskell Through Diagrams</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="01-getting-started.html"><strong>1.</strong> Getting Started</a></li><li><a href="02-ghci.html"><strong>2.</strong> GHCi</a></li><li><a href="03-basic-diagrams.html"><strong>3.</strong> Basic Diagrams</a></li><li><a href="04-lists.html"><strong>4.</strong> Lists</a></li><li><a href="05-monoids.html"><strong>5.</strong> Monoids</a></li><li><a href="06-maybe.html"><strong>6.</strong> Maybe</a></li><li><a href="07-functors.html"><strong>7.</strong> Functors</a></li><li><a href="08-stepping-outside-of-the-repl.html"><strong>8.</strong> Stepping Outside of the Repl</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title">Haskell Through Diagrams</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="print.html#introduction" id="introduction"><h1>Introduction</h1></a>
+<a class="header" href="print.html#getting-started" id="getting-started"><h1>Getting Started</h1></a>
+<a class="header" href="print.html#installing-stack" id="installing-stack"><h2>Installing Stack</h2></a>
+<p>Haskell Stack is the best package manager for Haskell and it is what we will be
+using in this book. Install it by visiting its website,
+<a href="https://docs.haskellstack.org/en/stable/README/">https://docs.haskellstack.org/en/stable/README/</a>,
+and following the directions for your operating system.</p>
+<a class="header" href="print.html#getting-the-files" id="getting-the-files"><h2>Getting the Files</h2></a>
+<p>Go to
+<a href="https://github.com/lehmacdj/haskell-through-diagrams">https://github.com/lehmacdj/haskell-through-diagrams</a>
+and clone or download that repository. This contains all of the exercises and
+examples for this book.</p>
+<blockquote>
+<p>Right now this book isn't totally finished, thus the repository isn't totally
+finished either. For that reason I recommend cloning over downloading and then
+using <code>git pull</code> to update the files if you notice that you are missing files
+that are referenced from the book.</p>
+</blockquote>
+<a class="header" href="print.html#making-sure-everything-works" id="making-sure-everything-works"><h2>Making Sure Everything Works</h2></a>
+<p>Now use the command line to go to the directory you cloned this in (using <code>cd</code>)
+and use <code>stack build --install-ghc</code> to download and install all of the libraries
+we will need for this introduction to Haskell.</p>
+<a class="header" href="print.html#ghci" id="ghci"><h1>GHCi</h1></a>
+<a class="header" href="print.html#using-ghci" id="using-ghci"><h2>Using GHCi</h2></a>
+<p>GHCi is an interactive environment for running Haskell code. You can use it by
+typing <code>stack ghci</code>. If you use <code>stack ghci</code> inside of the project directory for
+this book, some definitions for this book will also be loaded. We won't need
+them right now, but will need them later once we start writing functions.</p>
+<a class="header" href="print.html#ghci-as-a-calculator" id="ghci-as-a-calculator"><h2>GHCi as a Calculator</h2></a>
+<p>Haskell has good support for crunching numbers. To learn a lot of Haskell's
+expression syntax we are simply going to do a few compute a few numbers.</p>
+<p>Adding, multiplying, dividing, and subtracting numbers is all very natural in
+Haskell:</p>
+<pre><code>λ&gt; 1 + 1
+2
+λ&gt; 1 - 1
+0
+λ&gt; 6 * 7
+42
+λ&gt; 4 / 3
+1.3333333333333333
+</code></pre>
+<p>Exponentiation is also simple:</p>
+<pre><code>λ&gt; 2 ^ 10
+1024
+λ&gt; 1.1 ^ 3
+1.3310000000000004
+λ&gt; 4 ^ (1/2)
+
+&lt;interactive&gt;:7:1: error:
+    • Could not deduce (Integral b0) arising from a use of ‘^’
+      from the context: Num a
+        bound by the inferred type of it :: Num a =&gt; a
+        at &lt;interactive&gt;:7:1-9
+      The type variable ‘b0’ is ambiguous
+      These potential instances exist:
+        instance Integral Integer -- Defined in ‘GHC.Real’
+        instance Integral Int -- Defined in ‘GHC.Real’
+        instance Integral Word -- Defined in ‘GHC.Real’
+    • In the expression: 4 ^ (1 / 2)
+      In an equation for ‘it’: it = 4 ^ (1 / 2)
+
+&lt;interactive&gt;:7:6: error:
+    • Could not deduce (Num b0) arising from the literal ‘1’
+      from the context: Num a
+        bound by the inferred type of it :: Num a =&gt; a
+        at &lt;interactive&gt;:7:1-9
+      The type variable ‘b0’ is ambiguous
+      These potential instances exist:
+        instance Num Integer -- Defined in ‘GHC.Num’
+        instance Num Double -- Defined in ‘GHC.Float’
+        instance Num Float -- Defined in ‘GHC.Float’
+        ...plus two others
+        ...plus one instance involving out-of-scope types
+        (use -fprint-potential-instances to see them all)
+    • In the first argument of ‘(/)’, namely ‘1’
+      In the second argument of ‘(^)’, namely ‘(1 / 2)’
+      In the expression: 4 ^ (1 / 2)
+
+&lt;interactive&gt;:7:6: error:
+    • Could not deduce (Fractional b0) arising from a use of ‘/’
+      from the context: Num a
+        bound by the inferred type of it :: Num a =&gt; a
+        at &lt;interactive&gt;:7:1-9
+      The type variable ‘b0’ is ambiguous
+      These potential instances exist:
+        instance Fractional Double -- Defined in ‘GHC.Float’
+        instance Fractional Float -- Defined in ‘GHC.Float’
+        ...plus one instance involving out-of-scope types
+        (use -fprint-potential-instances to see them all)
+    • In the second argument of ‘(^)’, namely ‘(1 / 2)’
+      In the expression: 4 ^ (1 / 2)
+      In an equation for ‘it’: it = 4 ^ (1 / 2)
+</code></pre>
+<p>Woah! That was surprising.</p>
+<p>One of the things Haskell does not do well is error messages. Essentially what
+this one is trying to tell you is that the exponentiation operator (<code>^</code>) expects
+the exponent to be an integer. Lets try again with a different operator:</p>
+<pre><code>λ&gt; 4 ** (1/2)
+2.0
+</code></pre>
+<p>Ahhhh. Much better. The difference between <code>^</code> and <code>**</code> is that <code>^</code> allows only
+integral numbers for the exponent but <code>**</code> allows any kind of number. We'll
+touch more on why this is later, right now it isn't super important though and
+the explanation would probably be too confusing right now anyways.</p>
+<p>Haskell also has a wide breadth of standard mathematical functions:</p>
+<pre><code>λ&gt; sin pi
+1.2246467991473532e-16
+λ&gt; cos 0
+1.0
+λ&gt; sqrt 4
+2.0
+λ&gt;
+</code></pre>
+<p>Functions are called by simply separating the function from the argument by a
+space. You can use parenthesis to specify what order should be computed in:</p>
+<pre><code>λ&gt; log (2 ^ 10)
+6.931471805599453
+λ&gt; log (exp 1)
+1.0
+λ&gt; logBase 10 (10 ^ 10)
+10.0
+</code></pre>
+<p>In GHCi we can bind something to a variable using <code>let</code>.</p>
+<pre><code>λ&gt; let log2 = logBase 2
+λ&gt; log2 4
+2.0
+λ&gt; let log10 = logBase 10
+λ&gt; log10 (10 ^ 10)
+10.0
+</code></pre>
+<p>Perhaps you think it is a little strange that we only apply one argument to
+<code>logBase</code> which clearly takes two arguments as we saw earlier. This is called
+<em>partial application</em> and is one of the distinguishing features of functional
+programming languages. Rather than having multi argument functions Haskell only
+has functions that take one argument. Functions that take multiple arguments can
+be emulated by functions that take one argument and return another function that
+can then be applied to its other argument. Of course we can also bind values to
+names:</p>
+<pre><code>λ&gt; let x = 7 + 5 * 7
+λ&gt; x
+42.0
+</code></pre>
+<a class="header" href="print.html#beyond-a-simple-calculator" id="beyond-a-simple-calculator"><h2>Beyond a Simple Calculator</h2></a>
+<p>Haskell of course is much more than a calculator:</p>
+<pre><code>λ&gt; [1,2,3]
+[1,2,3]
+λ&gt; sum [1,2,3]
+6
+λ&gt; [1..10]
+[1,2,3,4,5,6,7,8,9,10]
+λ&gt; product [1..10]
+3628800
+</code></pre>
+<p>Lists allow you to compute with many values at the same time.</p>
+<a class="header" href="print.html#types" id="types"><h2>Types</h2></a>
+<p>As I implied above when we encountered a massive error message Haskell values
+have types. Types help make sure you don't make mistakes when programming.
+Unfortunately they also sometimes make writing programs harder. For example,
+only <code>**</code> always returns a fractional result (that might for example be
+inexact) and <code>^</code> only works with integer exponents. In GHCi you can print out
+the types of expressions using <code>:t</code>:</p>
+<pre><code>λ&gt; :t 1
+1 :: Num t =&gt; t
+</code></pre>
+<p>Wait... why does something as simple as <code>1</code> have such a complicated type? In
+Haskell numeric literals are <em>polymorphic</em>. That means that <code>1</code> can mean either
+a 4 byte integer (like <code>int</code> in Java, C++, C, etc.), arbitrary precision integer
+or a floating point number. Let's dissect that type a little bit. <code>Num t</code> is a
+<em>constraint</em> that means (roughly) that the type <code>t</code> must be a number. The arrow
+<code>=&gt;</code> can be read as implication. So the entire type means that if some type <code>t</code>
+is a number then <code>1</code> has type <code>t</code>. Let's see some more types of various
+expressions:</p>
+<pre><code>λ&gt; :t &quot;Hello world!&quot;
+&quot;Hello world!&quot; :: [Char]
+λ&gt; :t [1,2,3]
+[1,2,3] :: Num t =&gt; [t]
+λ&gt; :t 1 + 1
+1 + 1 :: Num a =&gt; a
+λ&gt; :t 1.0
+1.0 :: Fractional t =&gt; t
+λ&gt; :t 1 / 1
+1 / 1 :: Fractional a =&gt; a
+</code></pre>
+<p><code>&quot;Hello world!&quot;</code> a string is apparently just a list of characters. <code>[t]</code> is a
+list of <code>t</code>s. There are <code>Fractional</code> numbers.</p>
+<blockquote>
+<p>Don't get confused by the different lower case letters that GHCi reports.
+All of them are <em>type variables</em>, and simply stand in for some arbitrary type
+(that also fulfills what ever it is constrained by). For example we could also
+write <code>1</code>'s type as <code>Num x =&gt; x</code>.</p>
+</blockquote>
+<p>We can also check the types of functions:</p>
+<pre><code>λ&gt; :t log
+log :: Floating a =&gt; a -&gt; a
+λ&gt; :t logBase
+logBase :: Floating a =&gt; a -&gt; a -&gt; a
+λ&gt; :t id
+id :: a -&gt; a
+</code></pre>
+<p>A type like <code>a -&gt; a</code> means it is a function that takes an <code>a</code> as an argument and
+returns an <code>a</code>. <code>logBase</code>'s type means that it is a function that expects an <code>a</code>
+and returns a function with type <code>a -&gt; a</code>. This lets it act pretty much like a
+multi argument function even though it isn't really.</p>
+<p>Let's try to find out what type <code>+</code> has:</p>
+<pre><code>λ&gt; :t +
+
+&lt;interactive&gt;:1:1: error: parse error on input ‘+’
+</code></pre>
+<p>Hmmm. We can get the type of operators by surrounding them with parenthesis like
+so:</p>
+<pre><code>λ&gt; :t (+)
+(+) :: Num a =&gt; a -&gt; a -&gt; a
+λ&gt; :t (-)
+(-) :: Num a =&gt; a -&gt; a -&gt; a
+λ&gt; :t (*)
+(*) :: Num a =&gt; a -&gt; a -&gt; a
+λ&gt; :t (/)
+(/) :: Fractional a =&gt; a -&gt; a -&gt; a
+λ&gt; :t (^)
+(^) :: (Num a, Integral b) =&gt; a -&gt; b -&gt; a
+λ&gt; :t (**)
+(**) :: Floating a =&gt; a -&gt; a -&gt; a
+</code></pre>
+<p>Here you can perhaps see why we got a huge nasty error message when we tried to
+compute <code>4 ^ (1/2)</code> earlier. <code>^</code> expects its second argument to be <code>Integeral</code>
+but <code>1/2</code></p>
+<pre><code>λ&gt; :t 1/2
+1/2 :: Fractional a =&gt; a
+</code></pre>
+<p>is <code>Fractional</code>.</p>
+<p>In general we can turn operators into a normal function by surrounding them with
+parenthesis:</p>
+<pre><code>λ&gt; (+) 1 2
+3
+</code></pre>
+<a class="header" href="print.html#try-it" id="try-it"><h2>Try It</h2></a>
+<p>Try writing a bunch of expressions composed from some of the functions and
+operators listed below. Another thing you can try is annotating the type of some
+expressions as demonstrated here:</p>
+<pre><code>λ&gt; 1 :: Integer
+1
+λ&gt; 1 :: Char
+
+&lt;interactive&gt;:52:1: error:
+    • No instance for (Num Char) arising from the literal ‘1’
+    • In the expression: 1 :: Char
+      In an equation for ‘it’: it = 1 :: Char
+λ&gt; 1 :: Fractional a =&gt; a
+1.0
+λ&gt; 1 :: Floating a =&gt; a
+1.0
+</code></pre>
+<p>This will help you get a sense of what types certain expressions have and how
+you can build your own expressions. Try checking the type of the function or
+operator before trying to use it in expressions if you aren't exactly sure what
+it does. Another helpful command in GHCi is <code>:info</code> which will show you a bunch
+of information and documentation about whatever you throw at it.</p>
+<a class="header" href="print.html#values" id="values"><h4>Values</h4></a>
+<p><code>True</code> <code>False</code> <code>pi</code></p>
+<a class="header" href="print.html#functions" id="functions"><h4>Functions</h4></a>
+<p><code>log</code> <code>logBase</code> <code>sin</code> <code>cos</code> <code>tan</code> <code>asin</code> <code>acos</code> <code>atan</code> <code>sinh</code> <code>cosh</code> <code>tanh</code>
+<code>asinh</code> <code>acosh</code> <code>atanh</code> <code>abs</code> <code>div</code> <code>mod</code> <code>length</code> <code>sqrt</code> <code>exp</code></p>
+<a class="header" href="print.html#operators" id="operators"><h4>Operators</h4></a>
+<p><code>^</code> <code>**</code> <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>$</code> <code>&gt;</code> <code>&lt;</code> <code>/=</code> <code>==</code> <code>&gt;=</code> <code>&lt;=</code> <code>:</code> <code>++</code></p>
+<a class="header" href="print.html#types-1" id="types-1"><h4>Types</h4></a>
+<p><code>Integer</code> <code>Int</code> <code>Float</code> <code>Double</code> <code>Char</code> <code>String</code> <code>Bool</code></p>
+<a class="header" href="print.html#constraints" id="constraints"><h4>Constraints</h4></a>
+<p><code>Floating</code> <code>Integral</code> <code>Num</code> <code>Float</code></p>
+<a class="header" href="print.html#basic-diagrams" id="basic-diagrams"><h1>Basic Diagrams</h1></a>
+<p>Let's draw some pretty pictures. After all this book is called <strong>Haskell Through
+Diagrams</strong>.</p>
+<p><code>diagrams</code> is a Haskell library for drawing graphics.</p>
+<a class="header" href="print.html#primitives" id="primitives"><h2>Primitives</h2></a>
+<p>Load up GHCi while in the project directory then try the following.</p>
+<pre><code>λ&gt; rendered &quot;triangle&quot; (triangle 1)
+</code></pre>
+<p><img alt="triangle" src="img/03-01-triangle.svg" class="center" /></p>
+<pre><code>λ&gt; rendered &quot;circle&quot; (circle 1)
+</code></pre>
+<p><img alt="circle" src="img/03-02-circle.svg" class="center" /></p>
+<pre><code>λ&gt; rendered &quot;pentagon&quot; (pentagon 1)
+</code></pre>
+<p><img alt="pentagon" src="img/03-03-pentagon.svg" class="center" /></p>
+<p>Open &quot;diagrams/triangle.svg&quot;, &quot;diagrams/circle.svg&quot;, and
+&quot;diagrams/pentagon.svg&quot; and you should see a triangle, circle, and a pentagon.
+Just as shown above.</p>
+<p>Those were all just outlines. What if we want a filled shape instead?</p>
+<pre><code>λ&gt; draw (fillColor black (triangle 1))
+</code></pre>
+<p><img alt="filled triangle" src="img/03-04-filled-triangle.svg" class="center" /></p>
+<blockquote>
+<p><code>draw</code> is the same as <code>rendered &quot;tmp&quot;</code>. It exists to make it easier to iterate
+on diagrams for the purpose of this tutorial. You can just open it in a
+browser and refresh every time you use <code>draw</code> again.</p>
+</blockquote>
+<a class="header" href="print.html#modifiers" id="modifiers"><h2>Modifiers</h2></a>
+<p>Diagrams are crafted by taking simple diagrams and modifying them using
+functions.</p>
+<p>Here are a few functions that can modify existing diagrams or create simple
+diagrams to try with <code>draw</code>.</p>
+<ul>
+<li>change the fill: <code>fc</code> or <code>fillColor</code> (use colors like <code>black</code>, <code>blue</code>,
+<code>green</code>, or most other common color names)</li>
+<li>change the outline: <code>lc</code> or <code>lineColor</code></li>
+<li>change the opacity: <code>fillOpacity</code></li>
+</ul>
+<blockquote>
+<p>If you tried checking the type signature of any of the functions associated
+with diagrams you might have noticed that they are absurdly complex. Not only
+do they have constraints like the functions involving arithmetic that we saw
+in the previous chapter but they also contain &quot;type functions&quot; and a lot of
+other complicated things. Don't worry about this too much for now. We will
+discuss the type signatures in greater detail when we discuss some of the more
+advanced features of Haskell's type system later. For now whenever I introduce
+new functions, with complicated type signatures, I will give them mock type
+signatures describe what the types are conceptually at a more concrete level.
+If I put a type in quotes its not a real type just a word to describe what
+that type is.</p>
+<p><code>fillColor :: &quot;Color&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;</code>
+<code>lineColor :: &quot;Color&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;</code>
+<code>fillOpacity :: &quot;Double&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;</code></p>
+</blockquote>
+<blockquote>
+<p>A complete list of the default colors can be found
+<a href="http://hackage.haskell.org/package/colour-2.3.3/docs/Data-Colour-Names.html">here</a>.
+If you find yourself desiring even more colors than the ones already
+accessible type <code>import qualified Diagrams.Color.XKCD as C</code> in GHCi and you
+will have access to all of the colors that you can find listed at
+xkcd.com/color/rgb written in <em>camelCase</em> prefixed by <code>C.</code>. For example, &quot;blue
+with a hint of purple&quot; would be written <code>C.blueWithAHintOfPurple</code>. You can
+also use arbitrary RGB colors like <code>sRGB 0 0.5 1.0</code> (with color components
+from 0 - 1.0) or <code>sRGB24 255 0 127</code> (color components ranging from 0 - 255).</p>
+</blockquote>
+<a class="header" href="print.html#combiners" id="combiners"><h2>Combiners</h2></a>
+<p>Lets try combining some diagrams now to make something a little more complex
+than a single shape. Because there are a number of different ways to combine
+diagrams with each other logically, diagrams provides several different
+operators for combining diagrams.</p>
+<p>Try running the following examples and then figure out how they combine the two
+diagrams they take as operands. Each takes two diagrams and produces a new one.</p>
+<ul>
+<li><code>draw (triangle 1 ||| triangle 2)</code></li>
+<li><code>draw (square 1 === pentagon 4)</code></li>
+<li><code>draw (circle 10 &lt;&gt; circle 5)</code></li>
+<li><code>draw ((circle 1 === circle 1) &lt;&gt; circle 1)</code></li>
+<li><code>draw (fillColor purple (triangle 1 === square 1))</code></li>
+</ul>
+<p>Now you might have noticed that if you want to chain a bunch of things together
+it takes a bunch of parenthesis, and is a little confusing to read. To solve
+those problems we have two operators: <code>$</code> and <code>#</code>. Both of these operators apply
+a function to a thing but they do it differently. Here are a couple of examples:</p>
+<ul>
+<li><code>draw $ lc green $ circle 1 &lt;&gt; circle 2 &lt;&gt; circle 3</code></li>
+<li><code>circle 1 &lt;&gt; circle 2 &lt;&gt; circle 3 # lc green # draw</code></li>
+<li><code>draw $ circle 1 &lt;&gt; circle 2 &lt;&gt; circle 3 # lc green</code></li>
+</ul>
+<p>Each of these does the exact same thing, just rearranged slightly differently.
+Checking the types of these operators</p>
+<pre><code>λ&gt; :t ($)
+($) :: (a -&gt; b) -&gt; a -&gt; b
+λ&gt; :t (#)
+(#) :: a -&gt; (a -&gt; b) -&gt; b
+</code></pre>
+<p>we can see that one of them applies a function to the thing that comes before it
+and the other applies a function to the thing that comes after it. <code>#</code> has a
+higher precedence than <code>$</code> (think multiplication comes before addition), which
+is why the third example works properly.</p>
+<blockquote>
+<p>You might notice that I use <code>($)</code> to check the type of <code>$</code>. The parenthesis
+here turn <code>$</code> from an operator into an ordinary function which we have to do
+to be able to check the type. This also works when applying operators, for
+example <code>(+) 1 2</code> evaluates to <code>3</code>.</p>
+</blockquote>
+<a class="header" href="print.html#transformations" id="transformations"><h2>Transformations</h2></a>
+<p>Now we know how to create diagrams, combine them, and color them. As far as
+manipulating pictures goes it seems we are only missing one major thing:
+transforming diagrams. We can translate, rotate, and scale diagrams
+using functions with the following signatures:</p>
+<pre><code>scale :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+rotate :: &quot;Angle&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+translate :: &quot;Vector&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<p>Now since those function signatures aren't exactly as enlightening as we might
+like them to be, here is a little section on each one.</p>
+<a class="header" href="print.html#scale" id="scale"><h3><code>scale</code></h3></a>
+<p>This scales a diagram by some amount, uniformly, in every dimension. If you
+noticed earlier, each of the primitive shapes does the same thing (e.g. <code>square 0.5 = square 1 # scale 0.5</code>). If you want to scale a shape by one dimension, you
+can do that with <code>scaleX</code> and <code>scaleY</code>, which work exactly how you probably
+expect.</p>
+<a class="header" href="print.html#rotate" id="rotate"><h3><code>rotate</code></h3></a>
+<p>This rotates a diagram by an angle. What is an angle? An angle is basically a
+floating point number along with the unit of the angle. There are 3 different
+units that you can use for your angles.</p>
+<pre><code>λ&gt; 1 @@ turn
+6.283185307179586 @@ rad
+λ&gt; 360 @@ deg
+6.283185307179586 @@ rad
+λ&gt; 2 * pi @@ rad
+6.283185307179586 @@ rad
+</code></pre>
+<blockquote>
+<p><code>(@@)</code> is a weird operator that is used to append an operator to a number by
+diagrams. Please don't ask to me to explain its type until at least 5 chapters
+from now...</p>
+</blockquote>
+<p>Internally all angles use radians. There are also a few common angles provided:
+<code>fullTurn</code>, <code>halfTurn</code>, <code>quarterTurn</code>. If you just want to rotate by turns (aka
+multiples of τ), you can use the function <code>rotateBy :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;</code>.</p>
+<a class="header" href="print.html#translate" id="translate"><h3><code>translate</code></h3></a>
+<p>This translates the local origin of a diagram to a new vector, using the current
+local coordinate system. First we construct a vector to pass to translate.</p>
+<pre><code>λ&gt; r2 (1, 1.5)
+V2 1.0 1.5
+</code></pre>
+<p>Next it is important to understand what the local origin of a diagram is and
+what it does. You can show the origin of a diagram by using <code>showOrigin :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;</code>. The local origin starts at the center for primitive
+diagrams.</p>
+<pre><code>λ&gt; draw $ showOrigin $ square 1
+</code></pre>
+<p><img alt="square with origin" src="img/03-05-square-origin.svg" class="center" /></p>
+<p>However when combining diagrams the original origin is maintained.</p>
+<pre><code>λ&gt; draw $ showOrigin $ circle 1 ||| square 1
+</code></pre>
+<p><img alt="circle and square with origin" src="img/03-06-circle-square-origin.svg" class="center" /></p>
+<p>Using translate moves the local origin, relative to where the local origin used
+to be at.</p>
+<pre><code>λ&gt; draw $ showOrigin $ circle 1 # translate (r2 (0.5, 0.5))
+</code></pre>
+<p><img alt="circle and square with translated origin" src="img/03-07-translated-origin.svg" class="center" /></p>
+<p>But when we combine a translated image with another, it doesn't appear like the
+translation had the effect we expected exactly. It will be a little while before
+we know enough to understand what is going on here exactly.</p>
+<pre><code>λ&gt; draw $ circle 1 ||| circle 1 # translate (r2 (0.5, 0.5))
+</code></pre>
+<p><img alt="combined translated circles" src="img/03-08-combined-translated.svg" class="center" /></p>
+<p>However, when we combine images with <code>&lt;&gt;</code> the translation has exactly the effect
+we expected. The local origins of the two diagrams are placed on top of one
+another.</p>
+<pre><code>λ&gt; draw $ circle 1 &lt;&gt; circle 1 # translate (r2 (0.5, 0.5))
+</code></pre>
+<p><img alt="atop translated circles" src="img/03-09-atop-translated.svg" class="center" /></p>
+<p>So using <code>&lt;&gt;</code> in addition with <code>translate</code> it is in fact possible to combine
+diagrams however you want, and position them as exactly as desired, to pixel
+perfect precision.</p>
+<a class="header" href="print.html#composing-transformations" id="composing-transformations"><h3>Composing Transformations</h3></a>
+<p>Now that you know how to transform diagrams in a variety of ways, you may find
+yourself desiring a function that does several transformations at once. This is
+quite easy to accomplish using <code>.</code> the function composition operator.</p>
+<pre><code>λ&gt; let scaleThenMove = translate (r2 (0.5, 0)) . scale 0.5
+λ&gt; draw $ circle 1 &lt;&gt; circle 1 # scaleThenMove
+</code></pre>
+<p><img alt="two circles" src="img/03-10-two-circles.svg" class="center" /></p>
+<blockquote>
+<p>Remember we used <code>let</code> in the previous chapter to declare intermediate
+variables.</p>
+</blockquote>
+<a class="header" href="print.html#try-it-1" id="try-it-1"><h2>Try It</h2></a>
+<p>Now you know how to do a lot of different things with diagrams, and it is time
+to create a few on your own. I provide a few diagrams as goals that you might
+try to create. You can find the code that I used to generate the diagrams
+provided in the file <code>src/Diagrams/Book/Chapter3.hs</code>, each as a single
+definition with the name I have given it here. Before cheating though, seriously
+try to make the diagram your self first. I don't think any of the ones here
+would be too hard to make. A glossary of functions is available below the
+exercises for reference.</p>
+<p>ex1
+<img alt="ex1" src="img/03-ex-01.svg" class="center" /></p>
+<p>ex2
+<img alt="ex2" src="img/03-ex-02.svg" class="center" /></p>
+<p>ex3
+<img alt="ex3" src="img/03-ex-03.svg" class="center" /></p>
+<p>ex4
+<img alt="ex4" src="img/03-ex-04.svg" class="center" /></p>
+<p>ex5
+<img alt="ex5" src="img/03-ex-05.svg" class="center" /></p>
+<a class="header" href="print.html#glossary" id="glossary"><h2>Glossary</h2></a>
+<p>Here is a list of functions that I used in this chapter, or very similar
+functions that you should be able to easily figure out how to use.</p>
+<a class="header" href="print.html#primitive-shapes" id="primitive-shapes"><h3>Primitive Shapes</h3></a>
+<pre><code>triangle :: &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>square :: &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>pentagon :: &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>hexagon :: &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>regPoly :: Int -&gt; &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>rect :: &quot;Size&quot; -&gt; &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>roundedRect :: &quot;Size&quot; -&gt; &quot;Size&quot; -&gt; &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>circle :: &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>elipse :: &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>elipseXY :: &quot;Size&quot; -&gt; &quot;Size&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<a class="header" href="print.html#aesthetic-modification" id="aesthetic-modification"><h3>Aesthetic Modification</h3></a>
+<pre><code>fillColor :: &quot;Color&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>fc :: &quot;Color&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>lineColor :: &quot;Color&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>lc :: &quot;Color&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>fillOpacity :: Double -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<a class="header" href="print.html#combiners-1" id="combiners-1"><h3>Combiners</h3></a>
+<pre><code>atop :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>beneath :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>(&lt;&gt;) :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>beside :: &quot;Vector&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>(|||) :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>(===) :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<a class="header" href="print.html#transformations-1" id="transformations-1"><h3>Transformations</h3></a>
+<pre><code>scale :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>scaleX :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>scaleY :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>translate :: &quot;Vector&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>translateX :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>translateY :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>rotate :: &quot;Angle&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>rotateBy :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>reflectX :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>reflectY :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<a class="header" href="print.html#debugging-diagrams" id="debugging-diagrams"><h3>Debugging Diagrams</h3></a>
+<pre><code>showEnvelope :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>showOrigin :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>showTrace :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<a class="header" href="print.html#lists" id="lists"><h1>Lists</h1></a>
+<a class="header" href="print.html#monoids" id="monoids"><h1>Monoids</h1></a>
+<a class="header" href="print.html#maybe" id="maybe"><h1>Maybe</h1></a>
+<a class="header" href="print.html#functors" id="functors"><h1>Functors</h1></a>
+<a class="header" href="print.html#stepping-outside-of-the-repl" id="stepping-outside-of-the-repl"><h1>Stepping Outside of the Repl</h1></a>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+
+                
+
+            </div>
+
+            
+
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+        <script>
+            $(document).ready(function() {
+                window.print();
+            })
+        </script>
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
+</html>

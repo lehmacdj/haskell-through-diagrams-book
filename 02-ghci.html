@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>GHCi - Haskell Through Diagrams</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li class="affix"><a href="introduction.html">Introduction</a></li><li><a href="01-getting-started.html"><strong>1.</strong> Getting Started</a></li><li><a href="02-ghci.html" class="active"><strong>2.</strong> GHCi</a></li><li><a href="03-basic-diagrams.html"><strong>3.</strong> Basic Diagrams</a></li><li><a href="04-lists.html"><strong>4.</strong> Lists</a></li><li><a href="05-monoids.html"><strong>5.</strong> Monoids</a></li><li><a href="06-maybe.html"><strong>6.</strong> Maybe</a></li><li><a href="07-functors.html"><strong>7.</strong> Functors</a></li><li><a href="08-stepping-outside-of-the-repl.html"><strong>8.</strong> Stepping Outside of the Repl</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title">Haskell Through Diagrams</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="02-ghci.html#ghci" id="ghci"><h1>GHCi</h1></a>
+<a class="header" href="02-ghci.html#using-ghci" id="using-ghci"><h2>Using GHCi</h2></a>
+<p>GHCi is an interactive environment for running Haskell code. You can use it by
+typing <code>stack ghci</code>. If you use <code>stack ghci</code> inside of the project directory for
+this book, some definitions for this book will also be loaded. We won't need
+them right now, but will need them later once we start writing functions.</p>
+<a class="header" href="02-ghci.html#ghci-as-a-calculator" id="ghci-as-a-calculator"><h2>GHCi as a Calculator</h2></a>
+<p>Haskell has good support for crunching numbers. To learn a lot of Haskell's
+expression syntax we are simply going to do a few compute a few numbers.</p>
+<p>Adding, multiplying, dividing, and subtracting numbers is all very natural in
+Haskell:</p>
+<pre><code>λ&gt; 1 + 1
+2
+λ&gt; 1 - 1
+0
+λ&gt; 6 * 7
+42
+λ&gt; 4 / 3
+1.3333333333333333
+</code></pre>
+<p>Exponentiation is also simple:</p>
+<pre><code>λ&gt; 2 ^ 10
+1024
+λ&gt; 1.1 ^ 3
+1.3310000000000004
+λ&gt; 4 ^ (1/2)
+
+&lt;interactive&gt;:7:1: error:
+    • Could not deduce (Integral b0) arising from a use of ‘^’
+      from the context: Num a
+        bound by the inferred type of it :: Num a =&gt; a
+        at &lt;interactive&gt;:7:1-9
+      The type variable ‘b0’ is ambiguous
+      These potential instances exist:
+        instance Integral Integer -- Defined in ‘GHC.Real’
+        instance Integral Int -- Defined in ‘GHC.Real’
+        instance Integral Word -- Defined in ‘GHC.Real’
+    • In the expression: 4 ^ (1 / 2)
+      In an equation for ‘it’: it = 4 ^ (1 / 2)
+
+&lt;interactive&gt;:7:6: error:
+    • Could not deduce (Num b0) arising from the literal ‘1’
+      from the context: Num a
+        bound by the inferred type of it :: Num a =&gt; a
+        at &lt;interactive&gt;:7:1-9
+      The type variable ‘b0’ is ambiguous
+      These potential instances exist:
+        instance Num Integer -- Defined in ‘GHC.Num’
+        instance Num Double -- Defined in ‘GHC.Float’
+        instance Num Float -- Defined in ‘GHC.Float’
+        ...plus two others
+        ...plus one instance involving out-of-scope types
+        (use -fprint-potential-instances to see them all)
+    • In the first argument of ‘(/)’, namely ‘1’
+      In the second argument of ‘(^)’, namely ‘(1 / 2)’
+      In the expression: 4 ^ (1 / 2)
+
+&lt;interactive&gt;:7:6: error:
+    • Could not deduce (Fractional b0) arising from a use of ‘/’
+      from the context: Num a
+        bound by the inferred type of it :: Num a =&gt; a
+        at &lt;interactive&gt;:7:1-9
+      The type variable ‘b0’ is ambiguous
+      These potential instances exist:
+        instance Fractional Double -- Defined in ‘GHC.Float’
+        instance Fractional Float -- Defined in ‘GHC.Float’
+        ...plus one instance involving out-of-scope types
+        (use -fprint-potential-instances to see them all)
+    • In the second argument of ‘(^)’, namely ‘(1 / 2)’
+      In the expression: 4 ^ (1 / 2)
+      In an equation for ‘it’: it = 4 ^ (1 / 2)
+</code></pre>
+<p>Woah! That was surprising.</p>
+<p>One of the things Haskell does not do well is error messages. Essentially what
+this one is trying to tell you is that the exponentiation operator (<code>^</code>) expects
+the exponent to be an integer. Lets try again with a different operator:</p>
+<pre><code>λ&gt; 4 ** (1/2)
+2.0
+</code></pre>
+<p>Ahhhh. Much better. The difference between <code>^</code> and <code>**</code> is that <code>^</code> allows only
+integral numbers for the exponent but <code>**</code> allows any kind of number. We'll
+touch more on why this is later, right now it isn't super important though and
+the explanation would probably be too confusing right now anyways.</p>
+<p>Haskell also has a wide breadth of standard mathematical functions:</p>
+<pre><code>λ&gt; sin pi
+1.2246467991473532e-16
+λ&gt; cos 0
+1.0
+λ&gt; sqrt 4
+2.0
+λ&gt;
+</code></pre>
+<p>Functions are called by simply separating the function from the argument by a
+space. You can use parenthesis to specify what order should be computed in:</p>
+<pre><code>λ&gt; log (2 ^ 10)
+6.931471805599453
+λ&gt; log (exp 1)
+1.0
+λ&gt; logBase 10 (10 ^ 10)
+10.0
+</code></pre>
+<p>In GHCi we can bind something to a variable using <code>let</code>.</p>
+<pre><code>λ&gt; let log2 = logBase 2
+λ&gt; log2 4
+2.0
+λ&gt; let log10 = logBase 10
+λ&gt; log10 (10 ^ 10)
+10.0
+</code></pre>
+<p>Perhaps you think it is a little strange that we only apply one argument to
+<code>logBase</code> which clearly takes two arguments as we saw earlier. This is called
+<em>partial application</em> and is one of the distinguishing features of functional
+programming languages. Rather than having multi argument functions Haskell only
+has functions that take one argument. Functions that take multiple arguments can
+be emulated by functions that take one argument and return another function that
+can then be applied to its other argument. Of course we can also bind values to
+names:</p>
+<pre><code>λ&gt; let x = 7 + 5 * 7
+λ&gt; x
+42.0
+</code></pre>
+<a class="header" href="02-ghci.html#beyond-a-simple-calculator" id="beyond-a-simple-calculator"><h2>Beyond a Simple Calculator</h2></a>
+<p>Haskell of course is much more than a calculator:</p>
+<pre><code>λ&gt; [1,2,3]
+[1,2,3]
+λ&gt; sum [1,2,3]
+6
+λ&gt; [1..10]
+[1,2,3,4,5,6,7,8,9,10]
+λ&gt; product [1..10]
+3628800
+</code></pre>
+<p>Lists allow you to compute with many values at the same time.</p>
+<a class="header" href="02-ghci.html#types" id="types"><h2>Types</h2></a>
+<p>As I implied above when we encountered a massive error message Haskell values
+have types. Types help make sure you don't make mistakes when programming.
+Unfortunately they also sometimes make writing programs harder. For example,
+only <code>**</code> always returns a fractional result (that might for example be
+inexact) and <code>^</code> only works with integer exponents. In GHCi you can print out
+the types of expressions using <code>:t</code>:</p>
+<pre><code>λ&gt; :t 1
+1 :: Num t =&gt; t
+</code></pre>
+<p>Wait... why does something as simple as <code>1</code> have such a complicated type? In
+Haskell numeric literals are <em>polymorphic</em>. That means that <code>1</code> can mean either
+a 4 byte integer (like <code>int</code> in Java, C++, C, etc.), arbitrary precision integer
+or a floating point number. Let's dissect that type a little bit. <code>Num t</code> is a
+<em>constraint</em> that means (roughly) that the type <code>t</code> must be a number. The arrow
+<code>=&gt;</code> can be read as implication. So the entire type means that if some type <code>t</code>
+is a number then <code>1</code> has type <code>t</code>. Let's see some more types of various
+expressions:</p>
+<pre><code>λ&gt; :t &quot;Hello world!&quot;
+&quot;Hello world!&quot; :: [Char]
+λ&gt; :t [1,2,3]
+[1,2,3] :: Num t =&gt; [t]
+λ&gt; :t 1 + 1
+1 + 1 :: Num a =&gt; a
+λ&gt; :t 1.0
+1.0 :: Fractional t =&gt; t
+λ&gt; :t 1 / 1
+1 / 1 :: Fractional a =&gt; a
+</code></pre>
+<p><code>&quot;Hello world!&quot;</code> a string is apparently just a list of characters. <code>[t]</code> is a
+list of <code>t</code>s. There are <code>Fractional</code> numbers.</p>
+<blockquote>
+<p>Don't get confused by the different lower case letters that GHCi reports.
+All of them are <em>type variables</em>, and simply stand in for some arbitrary type
+(that also fulfills what ever it is constrained by). For example we could also
+write <code>1</code>'s type as <code>Num x =&gt; x</code>.</p>
+</blockquote>
+<p>We can also check the types of functions:</p>
+<pre><code>λ&gt; :t log
+log :: Floating a =&gt; a -&gt; a
+λ&gt; :t logBase
+logBase :: Floating a =&gt; a -&gt; a -&gt; a
+λ&gt; :t id
+id :: a -&gt; a
+</code></pre>
+<p>A type like <code>a -&gt; a</code> means it is a function that takes an <code>a</code> as an argument and
+returns an <code>a</code>. <code>logBase</code>'s type means that it is a function that expects an <code>a</code>
+and returns a function with type <code>a -&gt; a</code>. This lets it act pretty much like a
+multi argument function even though it isn't really.</p>
+<p>Let's try to find out what type <code>+</code> has:</p>
+<pre><code>λ&gt; :t +
+
+&lt;interactive&gt;:1:1: error: parse error on input ‘+’
+</code></pre>
+<p>Hmmm. We can get the type of operators by surrounding them with parenthesis like
+so:</p>
+<pre><code>λ&gt; :t (+)
+(+) :: Num a =&gt; a -&gt; a -&gt; a
+λ&gt; :t (-)
+(-) :: Num a =&gt; a -&gt; a -&gt; a
+λ&gt; :t (*)
+(*) :: Num a =&gt; a -&gt; a -&gt; a
+λ&gt; :t (/)
+(/) :: Fractional a =&gt; a -&gt; a -&gt; a
+λ&gt; :t (^)
+(^) :: (Num a, Integral b) =&gt; a -&gt; b -&gt; a
+λ&gt; :t (**)
+(**) :: Floating a =&gt; a -&gt; a -&gt; a
+</code></pre>
+<p>Here you can perhaps see why we got a huge nasty error message when we tried to
+compute <code>4 ^ (1/2)</code> earlier. <code>^</code> expects its second argument to be <code>Integeral</code>
+but <code>1/2</code></p>
+<pre><code>λ&gt; :t 1/2
+1/2 :: Fractional a =&gt; a
+</code></pre>
+<p>is <code>Fractional</code>.</p>
+<p>In general we can turn operators into a normal function by surrounding them with
+parenthesis:</p>
+<pre><code>λ&gt; (+) 1 2
+3
+</code></pre>
+<a class="header" href="02-ghci.html#try-it" id="try-it"><h2>Try It</h2></a>
+<p>Try writing a bunch of expressions composed from some of the functions and
+operators listed below. Another thing you can try is annotating the type of some
+expressions as demonstrated here:</p>
+<pre><code>λ&gt; 1 :: Integer
+1
+λ&gt; 1 :: Char
+
+&lt;interactive&gt;:52:1: error:
+    • No instance for (Num Char) arising from the literal ‘1’
+    • In the expression: 1 :: Char
+      In an equation for ‘it’: it = 1 :: Char
+λ&gt; 1 :: Fractional a =&gt; a
+1.0
+λ&gt; 1 :: Floating a =&gt; a
+1.0
+</code></pre>
+<p>This will help you get a sense of what types certain expressions have and how
+you can build your own expressions. Try checking the type of the function or
+operator before trying to use it in expressions if you aren't exactly sure what
+it does. Another helpful command in GHCi is <code>:info</code> which will show you a bunch
+of information and documentation about whatever you throw at it.</p>
+<a class="header" href="02-ghci.html#values" id="values"><h4>Values</h4></a>
+<p><code>True</code> <code>False</code> <code>pi</code></p>
+<a class="header" href="02-ghci.html#functions" id="functions"><h4>Functions</h4></a>
+<p><code>log</code> <code>logBase</code> <code>sin</code> <code>cos</code> <code>tan</code> <code>asin</code> <code>acos</code> <code>atan</code> <code>sinh</code> <code>cosh</code> <code>tanh</code>
+<code>asinh</code> <code>acosh</code> <code>atanh</code> <code>abs</code> <code>div</code> <code>mod</code> <code>length</code> <code>sqrt</code> <code>exp</code></p>
+<a class="header" href="02-ghci.html#operators" id="operators"><h4>Operators</h4></a>
+<p><code>^</code> <code>**</code> <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>$</code> <code>&gt;</code> <code>&lt;</code> <code>/=</code> <code>==</code> <code>&gt;=</code> <code>&lt;=</code> <code>:</code> <code>++</code></p>
+<a class="header" href="02-ghci.html#types-1" id="types-1"><h4>Types</h4></a>
+<p><code>Integer</code> <code>Int</code> <code>Float</code> <code>Double</code> <code>Char</code> <code>String</code> <code>Bool</code></p>
+<a class="header" href="02-ghci.html#constraints" id="constraints"><h4>Constraints</h4></a>
+<p><code>Floating</code> <code>Integral</code> <code>Num</code> <code>Float</code></p>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="01-getting-started.html" class="mobile-nav-chapters previous">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="03-basic-diagrams.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="01-getting-started.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="03-basic-diagrams.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
+</html>
