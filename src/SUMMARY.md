@@ -9,4 +9,3 @@
 - [Monoids](05-monoids.md)
 - [Maybe](06-maybe.md)
 - [Functors](07-functors.md)
-- [Stepping Outside of the Repl](08-stepping-outside-of-the-repl.md)
