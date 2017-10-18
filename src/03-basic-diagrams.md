@@ -118,11 +118,6 @@ and the other applies a function to the thing that comes after it. `#` has a
 higher precedence than `$` (think multiplication comes before addition), which
 is why the third example works properly.
 
-> You might notice that I use `($)` to check the type of `$`. The parenthesis
-> here turn `$` from an operator into an ordinary function which we have to do
-> to be able to check the type. This also works when applying operators, for
-> example `(+) 1 2` evaluates to `3`.
-
 ## Transformations
 
 Now we know how to create diagrams, combine them, and color them. As far as
