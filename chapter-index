@@ -4,6 +4,5 @@ Getting Started
 GHCi
 Basic Diagrams
 Lists
-Monoids
-Maybe
-Functors
+Monoids and Maybe
+Functors and Folds
