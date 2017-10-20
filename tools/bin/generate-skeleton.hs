@@ -1,6 +1,6 @@
 import System.IO
 import Data.Char (toLower, isAlphaNum)
-import Data.List (intercalate)
+import Data.List (intercalate, isPrefixOf)
 import Control.Monad
 import System.Directory
 
@@ -38,8 +38,10 @@ main :: IO ()
 main = do
     index <- readFile "chapter-index"
     let entries = lines index
-        pEntries = takeWhile (not . null) entries
-        cEntries = drop 1 $ dropWhile (/="") entries
+        pEntries' = takeWhile (not . null) entries
+        cEntries' = drop 1 $ dropWhile (/="") entries
+        pEntries = filter ("#" `isPrefixOf`) pEntries
+        cEntries = filter ("#" `isPrefixOf`) cEntries
         indexes = [1..]
         prologue = map makePrologue pEntries
         chapters = zipWith makeBullet indexes cEntries
