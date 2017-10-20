@@ -40,8 +40,8 @@ main = do
     let entries = lines index
         pEntries' = takeWhile (not . null) entries
         cEntries' = drop 1 $ dropWhile (/="") entries
-        pEntries = filter ("#" `isPrefixOf`) pEntries
-        cEntries = filter ("#" `isPrefixOf`) cEntries
+        pEntries = filter (not . ("#" `isPrefixOf`)) pEntries'
+        cEntries = filter (not . ("#" `isPrefixOf`)) cEntries'
         indexes = [1..]
         prologue = map makePrologue pEntries
         chapters = zipWith makeBullet indexes cEntries
