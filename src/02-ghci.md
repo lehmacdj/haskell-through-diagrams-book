@@ -159,6 +159,10 @@ Haskell of course is much more than a calculator:
 3628800
 ```
 
+> If lists seem a little magical right now, we will cover lists in much greater
+> detail in Chapter 4. So don't worry, they are only here to provide a little
+> bit of exposure.
+
 Lists allow you to compute with many values at the same time.
 
 ## Types
