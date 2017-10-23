@@ -244,19 +244,26 @@ try to make the diagram your self first. I don't think any of the ones here
 would be too hard to make. A glossary of functions is available below the
 exercises for reference.
 
-ex1
+> If you aren't sure what a command is doing and it doesn't have a visual
+> effect, try using the command I list under debugging diagrams in order to see
+> how it is transforming the origin of the diagram. The envelope and trace are
+> both different kinds of boundaries for a diagram.
+>
+> In particular you might need to do this for the `align` and `snug` commands.
+
+ch3ex1
 <img alt="ex1" src="img/03-ex-01.svg" class="center" />
 
-ex2
+ch3ex2
 <img alt="ex2" src="img/03-ex-02.svg" class="center" />
 
-ex3
+ch3ex3
 <img alt="ex3" src="img/03-ex-03.svg" class="center" />
 
-ex4
+ch3ex4
 <img alt="ex4" src="img/03-ex-04.svg" class="center" />
 
-ex5
+ch3ex5
 <img alt="ex5" src="img/03-ex-05.svg" class="center" />
 
 ## Glossary
@@ -350,6 +357,60 @@ translateX :: "Size" -> "Diagram" -> "Diagram"
 ```
 ```
 translateY :: "Size" -> "Diagram" -> "Diagram"
+```
+```
+centerX :: "Diagram" -> "Diagram"
+```
+```
+centerY :: "Diagram" -> "Diagram"
+```
+```
+alignT :: "Diagram" -> "Diagram"
+```
+```
+alignB :: "Diagram" -> "Diagram"
+```
+```
+alignL :: "Diagram" -> "Diagram"
+```
+```
+alignR :: "Diagram" -> "Diagram"
+```
+```
+alignTL :: "Diagram" -> "Diagram"
+```
+```
+alignBL :: "Diagram" -> "Diagram"
+```
+```
+alignTR :: "Diagram" -> "Diagram"
+```
+```
+alignBR :: "Diagram" -> "Diagram"
+```
+```
+snugT :: "Diagram" -> "Diagram"
+```
+```
+snugB :: "Diagram" -> "Diagram"
+```
+```
+snugL :: "Diagram" -> "Diagram"
+```
+```
+snugR :: "Diagram" -> "Diagram"
+```
+```
+snugTL :: "Diagram" -> "Diagram"
+```
+```
+snugBL :: "Diagram" -> "Diagram"
+```
+```
+snugTR :: "Diagram" -> "Diagram"
+```
+```
+snugBR :: "Diagram" -> "Diagram"
 ```
 ```
 rotate :: "Angle" -> "Diagram" -> "Diagram"
