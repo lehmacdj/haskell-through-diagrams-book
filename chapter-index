@@ -6,7 +6,7 @@ Basic Diagrams
 Lists
 Monoids and Maybe
 Functors and Folds
-Trees
+Trees and Traversals
 # unfolds
 # applicatives
 # monads
