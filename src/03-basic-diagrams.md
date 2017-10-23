@@ -365,6 +365,9 @@ centerX :: "Diagram" -> "Diagram"
 centerY :: "Diagram" -> "Diagram"
 ```
 ```
+centerXY :: "Diagram" -> "Diagram"
+```
+```
 alignT :: "Diagram" -> "Diagram"
 ```
 ```
@@ -389,6 +392,12 @@ alignTR :: "Diagram" -> "Diagram"
 alignBR :: "Diagram" -> "Diagram"
 ```
 ```
+alignX :: "Double" -> "Diagram" -> "Diagram"
+```
+```
+alignY :: "Double" -> "Diagram" -> "Diagram"
+```
+```
 snugT :: "Diagram" -> "Diagram"
 ```
 ```
@@ -411,6 +420,12 @@ snugTR :: "Diagram" -> "Diagram"
 ```
 ```
 snugBR :: "Diagram" -> "Diagram"
+```
+```
+snugX :: "Double" -> "Diagram" -> "Diagram"
+```
+```
+snugY :: "Double" -> "Diagram" -> "Diagram"
 ```
 ```
 rotate :: "Angle" -> "Diagram" -> "Diagram"
