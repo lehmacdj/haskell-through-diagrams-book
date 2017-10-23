@@ -10,7 +10,8 @@ and following the directions for your operating system.
 Go to
 [https://github.com/lehmacdj/haskell-through-diagrams](https://github.com/lehmacdj/haskell-through-diagrams)
 and clone or download that repository. This contains all of the exercises and
-examples for this book.
+examples for this book. If you don't have git installed you can get that at
+[https://git-scm.com](https://git-scm.com).
 
 > Right now this book isn't totally finished, thus the repository isn't totally
 > finished either. For that reason I recommend cloning over downloading and then
@@ -18,6 +19,7 @@ examples for this book.
 > that are referenced from the book.
 
 ## Making Sure Everything Works
-Now use the command line to go to the directory you cloned this in (using `cd`)
-and use `stack build --install-ghc` to download and install all of the libraries
-we will need for this introduction to Haskell.
+Now use the command line to go to the directory you cloned this in (using `cd`
+followed by the path to the directory you cloned) and use `stack build
+--install-ghc` to download and install all of the libraries we will need for
+this introduction to Haskell.
