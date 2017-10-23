@@ -555,15 +555,22 @@ definition with the name I have given it here. Before cheating though, seriously
 try to make the diagram your self first. I don't think any of the ones here
 would be too hard to make. A glossary of functions is available below the
 exercises for reference.</p>
-<p>ex1
+<blockquote>
+<p>If you aren't sure what a command is doing and it doesn't have a visual
+effect, try using the command I list under debugging diagrams in order to see
+how it is transforming the origin of the diagram. The envelope and trace are
+both different kinds of boundaries for a diagram.</p>
+<p>In particular you might need to do this for the <code>align</code> and <code>snug</code> commands.</p>
+</blockquote>
+<p>ch3ex1
 <img alt="ex1" src="img/03-ex-01.svg" class="center" /></p>
-<p>ex2
+<p>ch3ex2
 <img alt="ex2" src="img/03-ex-02.svg" class="center" /></p>
-<p>ex3
+<p>ch3ex3
 <img alt="ex3" src="img/03-ex-03.svg" class="center" /></p>
-<p>ex4
+<p>ch3ex4
 <img alt="ex4" src="img/03-ex-04.svg" class="center" /></p>
-<p>ex5
+<p>ch3ex5
 <img alt="ex5" src="img/03-ex-05.svg" class="center" /></p>
 <a class="header" href="print.html#glossary" id="glossary"><h2>Glossary</h2></a>
 <p>Here is a list of functions that I used in this chapter, or very similar
@@ -625,6 +632,42 @@ functions that you should be able to easily figure out how to use.</p>
 <pre><code>translateX :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
 <pre><code>translateY :: &quot;Size&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>centerX :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>centerY :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>alignT :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>alignB :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>alignL :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>alignR :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>alignTL :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>alignBL :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>alignTR :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>alignBR :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>snugT :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>snugB :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>snugL :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>snugR :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>snugTL :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>snugBL :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>snugTR :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
+<pre><code>snugBR :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
 <pre><code>rotate :: &quot;Angle&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
