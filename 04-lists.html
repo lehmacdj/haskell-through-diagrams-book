@@ -89,6 +89,53 @@
 
                 <div id="content" class="content">
                     <a class="header" href="04-lists.html#lists" id="lists"><h1>Lists</h1></a>
+<p>Lists are the bread and butter data structure for functional programming (well,
+I guess along with trees, but we'll get to those later). Lets see what we can do
+with them in Haskell.</p>
+<a class="header" href="04-lists.html#lists-in-ghci" id="lists-in-ghci"><h1>Lists in GHCi</h1></a>
+<p>As we have already seen in Chapter 2, we can write use lists in GHCi.</p>
+<pre><code>λ&gt; [1,2,3]
+[1,2,3]
+λ&gt; [1..10]
+[1,2,3,4,5,6,7,8,9,10]
+</code></pre>
+<p>There are a couple of important utility functions for working with lists.</p>
+<pre><code>λ&gt; map (\x -&gt; x + 1) [1,2,3]
+[2,3,4]
+λ&gt; filter (\x -&gt; mod x 2 == 0) [1..10]
+[2,4,6,8,10]
+λ&gt; take 5 [1..10]
+[1,2,3,4,5]
+λ&gt; drop 5 [1..10]
+[6,7,8,9,10]
+</code></pre>
+<p><code>map</code> lets you modify all of the values in a list at the same time and <code>filter</code>
+lets you restrict the elements of a list in a particular way. <code>take</code> gets the
+first elements of a list putting them in a new one and <code>drop</code> removes a certain
+number of elements from a list.</p>
+<p>Both <code>map</code> and <code>filter</code> are quite interesting functions. Both of them take
+another function as an argument. In functional programming lingo, we call
+functions that take other functions as arguments <em>higher order</em>.</p>
+<a class="header" href="04-lists.html#infinite-lists" id="infinite-lists"><h2>Infinite Lists</h2></a>
+<p>Watch out, you'll need to press control-c after running the next one.</p>
+<pre><code>λ&gt; [1..]
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,2Interrupted.
+</code></pre>
+<blockquote>
+<p>In general if you ever see GHCi loop forever you should be able to stop it by
+pressing control-c.</p>
+</blockquote>
+<p>That just went on for ever! Haskell is a lazy language. That means it only
+computes what it needs to, in order to get the answer you ask it for. This means
+that it is possible to compute things that involve infinite intermediate results
+(with limitations), however, if you ask for an infinite result, like the list of
+all of the positive integers that we computed above, Haskell will take forever
+to compute the result.</p>
+<p>Here are a few things you do with infinite lists.</p>
+<pre><code>λ&gt; take 10 [1..]
+[1,2,3,4,5,6,7,8,9,10]
+</code></pre>
+<a class="header" href="04-lists.html#computing-with-lists" id="computing-with-lists"><h1>Computing with Lists</h1></a>
 
                 </div>
 
