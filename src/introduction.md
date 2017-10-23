@@ -12,6 +12,12 @@ the code exercises, I include detailed solutions to all of them in the
 complementary repository, however relying on the solution is only cheating your
 self out of figuring out how to draw the diagram for yourself.
 
+## Help Improve the Book
+Confused about something? Found a typo? Think you have a way to improve the
+book? Please don't hesitate to submit an issue or pull request at
+[github.com/lehmacdj/haskell-through-diagrams-book](github.com/lehmacdj/haskell-through-diagrams-book)
+or contact me (lehmacdj@gmail.com).
+
 ## Under Construction
 This book is still under construction. Currently chapters 1-3 are mostly
 finished, and chapter 4 has been started on. Please consider anything in this
