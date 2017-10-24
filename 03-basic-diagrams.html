@@ -284,8 +284,13 @@ the points in the trace (50 to be exact).</p>
 <p><img alt="triangle trace" src="img/03-12-triangle-trace.svg" class="img" /></p>
 <p>In general use <code>snug</code> if you want two diagrams to be touching each other
 precisely and <code>align</code> if they just need to be near each other. Both <code>align</code> and
-<code>snug</code> have tons of functions that manipulate the origin to push it to the
-boundary of either the envelope or trace.</p>
+<code>snug</code> have tons of suffixes that push the origin toward one side of the shape
+using the trace. Here is an example of how to use <code>snug</code> to position two upside
+down triangles right next to one another.</p>
+<pre><code>λ&gt; let t = triangle 1 # fc yellow
+λ&gt; draw $ t # snugR &lt;&gt; t # rotateBy 0.5 # snugL
+</code></pre>
+<p><img alt="two triangles" src="img/03-13-two-triangles.svg" class="img" /></p>
 <a class="header" href="03-basic-diagrams.html#composing-transformations" id="composing-transformations"><h3>Composing Transformations</h3></a>
 <p>Now that you know how to transform diagrams in a variety of ways, you may find
 yourself desiring a function that does several transformations at once. This is
