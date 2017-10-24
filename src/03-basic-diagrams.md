@@ -252,8 +252,16 @@ the points in the trace (50 to be exact).
 
 In general use `snug` if you want two diagrams to be touching each other
 precisely and `align` if they just need to be near each other. Both `align` and
-`snug` have tons of functions that manipulate the origin to push it to the
-boundary of either the envelope or trace.
+`snug` have tons of suffixes that push the origin toward one side of the shape
+using the trace. Here is an example of how to use `snug` to position two upside
+down triangles right next to one another.
+
+```
+λ> let t = triangle 1 # fc yellow
+λ> draw $ t # snugR <> t # rotateBy 0.5 # snugL
+```
+
+<img alt="two triangles" src="img/03-13-two-triangles.svg" class="img" />
 
 ### Composing Transformations
 Now that you know how to transform diagrams in a variety of ways, you may find
