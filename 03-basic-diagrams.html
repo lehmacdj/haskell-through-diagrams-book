@@ -260,6 +260,32 @@ another.</p>
 <p>So using <code>&lt;&gt;</code> in addition with <code>translate</code> it is in fact possible to combine
 diagrams however you want, and position them as exactly as desired, to pixel
 perfect precision.</p>
+<a class="header" href="03-basic-diagrams.html#other-ways-to-translate" id="other-ways-to-translate"><h3>Other Ways to Translate</h3></a>
+<p>Using <code>translate</code> is somewhat tedious, as it requires you to very precisely
+specify how to move the origin. For the special case of moving the origin to
+some specific point on the edge of the shape there are a couple of handy helper
+methods all named <code>align</code> or <code>snug</code> with some suffix. The suffix tells you where
+it puts the origin and <code>align</code> and <code>snug</code> differ in how close they move the
+origin to the edge of the shape.</p>
+<p><code>align</code> uses the envelope of the diagram. The envelope is a rough approximation
+of the boundaries of the shape that is easily computed. We can check out the
+envelope by using <code>showEnvelope</code>.</p>
+<pre><code>λ&gt; draw $ triangle 1 # showEnvelope
+</code></pre>
+<p><img alt="triangle envelope" src="img/03-11-triangle-envelope.svg" class="img" /></p>
+<p><code>snug</code> uses the trace of the diagram. The trace of the diagram is a much, much
+closer approximation of the boundaries of the diagram than the envelope. It is
+however much more expensive to compute than the envelope. The cost of computing
+the trace won't matter too much though, until we start creating much larger
+diagrams. We can check out the trace by using <code>showTrace</code>. This shows some of
+the points in the trace (50 to be exact).</p>
+<pre><code>λ&gt; draw $ triangle 1 # showTrace
+</code></pre>
+<p><img alt="triangle trace" src="img/03-12-triangle-trace.svg" class="img" /></p>
+<p>In general use <code>snug</code> if you want two diagrams to be touching each other
+precisely and <code>align</code> if they just need to be near each other. Both <code>align</code> and
+<code>snug</code> have tons of functions that manipulate the origin to push it to the
+boundary of either the envelope or trace.</p>
 <a class="header" href="03-basic-diagrams.html#composing-transformations" id="composing-transformations"><h3>Composing Transformations</h3></a>
 <p>Now that you know how to transform diagrams in a variety of ways, you may find
 yourself desiring a function that does several transformations at once. This is
@@ -372,6 +398,8 @@ functions that you should be able to easily figure out how to use.</p>
 </code></pre>
 <pre><code>centerXY :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
+<pre><code>align :: &quot;Vector&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
 <pre><code>alignT :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
 <pre><code>alignB :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
@@ -392,6 +420,8 @@ functions that you should be able to easily figure out how to use.</p>
 </code></pre>
 <pre><code>alignY :: &quot;Double&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
+<pre><code>snug :: &quot;Vector&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
+</code></pre>
 <pre><code>snugT :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
 <pre><code>snugB :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
@@ -399,14 +429,6 @@ functions that you should be able to easily figure out how to use.</p>
 <pre><code>snugL :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
 <pre><code>snugR :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
-</code></pre>
-<pre><code>snugTL :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
-</code></pre>
-<pre><code>snugBL :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
-</code></pre>
-<pre><code>snugTR :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
-</code></pre>
-<pre><code>snugBR :: &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
 <pre><code>snugX :: &quot;Double&quot; -&gt; &quot;Diagram&quot; -&gt; &quot;Diagram&quot;
 </code></pre>
