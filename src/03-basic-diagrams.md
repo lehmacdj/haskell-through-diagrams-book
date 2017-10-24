@@ -220,6 +220,41 @@ So using `<>` in addition with `translate` it is in fact possible to combine
 diagrams however you want, and position them as exactly as desired, to pixel
 perfect precision.
 
+### Other Ways to Translate
+Using `translate` is somewhat tedious, as it requires you to very precisely
+specify how to move the origin. For the special case of moving the origin to
+some specific point on the edge of the shape there are a couple of handy helper
+methods all named `align` or `snug` with some suffix. The suffix tells you where
+it puts the origin and `align` and `snug` differ in how close they move the
+origin to the edge of the shape.
+
+`align` uses the envelope of the diagram. The envelope is a rough approximation
+of the boundaries of the shape that is easily computed. We can check out the
+envelope by using `showEnvelope`.
+
+```
+λ> draw $ triangle 1 # showEnvelope
+```
+<img alt="triangle envelope" src="img/03-11-triangle-envelope.svg" class="img" />
+
+`snug` uses the trace of the diagram. The trace of the diagram is a much, much
+closer approximation of the boundaries of the diagram than the envelope. It is
+however much more expensive to compute than the envelope. The cost of computing
+the trace won't matter too much though, until we start creating much larger
+diagrams. We can check out the trace by using `showTrace`. This shows some of
+the points in the trace (50 to be exact).
+
+```
+λ> draw $ triangle 1 # showTrace
+```
+
+<img alt="triangle trace" src="img/03-12-triangle-trace.svg" class="img" />
+
+In general use `snug` if you want two diagrams to be touching each other
+precisely and `align` if they just need to be near each other. Both `align` and
+`snug` have tons of functions that manipulate the origin to push it to the
+boundary of either the envelope or trace.
+
 ### Composing Transformations
 Now that you know how to transform diagrams in a variety of ways, you may find
 yourself desiring a function that does several transformations at once. This is
@@ -375,6 +410,9 @@ centerY :: "Diagram" -> "Diagram"
 centerXY :: "Diagram" -> "Diagram"
 ```
 ```
+align :: "Vector" -> "Diagram" -> "Diagram"
+```
+```
 alignT :: "Diagram" -> "Diagram"
 ```
 ```
@@ -405,6 +443,9 @@ alignX :: "Double" -> "Diagram" -> "Diagram"
 alignY :: "Double" -> "Diagram" -> "Diagram"
 ```
 ```
+snug :: "Vector" -> "Diagram" -> "Diagram"
+```
+```
 snugT :: "Diagram" -> "Diagram"
 ```
 ```
@@ -415,18 +456,6 @@ snugL :: "Diagram" -> "Diagram"
 ```
 ```
 snugR :: "Diagram" -> "Diagram"
-```
-```
-snugTL :: "Diagram" -> "Diagram"
-```
-```
-snugBL :: "Diagram" -> "Diagram"
-```
-```
-snugTR :: "Diagram" -> "Diagram"
-```
-```
-snugBR :: "Diagram" -> "Diagram"
 ```
 ```
 snugX :: "Double" -> "Diagram" -> "Diagram"
