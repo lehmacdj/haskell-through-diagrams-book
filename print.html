@@ -24,6 +24,8 @@
 
         <!-- Custom theme -->
         
+        <link rel="stylesheet" href="assets/custom.css">
+        
 
         
 
@@ -402,20 +404,20 @@ Diagrams</strong>.</p>
 <p>Load up GHCi while in the project directory then try the following.</p>
 <pre><code>λ&gt; rendered &quot;triangle&quot; (triangle 1)
 </code></pre>
-<p><img alt="triangle" src="img/03-01-triangle.svg" class="center" /></p>
+<p><img alt="triangle" src="img/03-01-triangle.svg" class="img" /></p>
 <pre><code>λ&gt; rendered &quot;circle&quot; (circle 1)
 </code></pre>
-<p><img alt="circle" src="img/03-02-circle.svg" class="center" /></p>
+<p><img alt="circle" src="img/03-02-circle.svg" class="img" /></p>
 <pre><code>λ&gt; rendered &quot;pentagon&quot; (pentagon 1)
 </code></pre>
-<p><img alt="pentagon" src="img/03-03-pentagon.svg" class="center" /></p>
+<p><img alt="pentagon" src="img/03-03-pentagon.svg" class="img" /></p>
 <p>Open &quot;diagrams/triangle.svg&quot;, &quot;diagrams/circle.svg&quot;, and
 &quot;diagrams/pentagon.svg&quot; and you should see a triangle, circle, and a pentagon.
 Just as shown above.</p>
 <p>Those were all just outlines. What if we want a filled shape instead?</p>
 <pre><code>λ&gt; draw (fillColor black (triangle 1))
 </code></pre>
-<p><img alt="filled triangle" src="img/03-04-filled-triangle.svg" class="center" /></p>
+<p><img alt="filled triangle" src="img/03-04-filled-triangle.svg" class="img" /></p>
 <blockquote>
 <p><code>draw</code> is the same as <code>rendered &quot;tmp&quot;</code>. It exists to make it easier to iterate
 on diagrams for the purpose of this tutorial. You can just open it in a
@@ -539,28 +541,28 @@ what it does. You can show the origin of a diagram by using <code>showOrigin :: 
 diagrams.</p>
 <pre><code>λ&gt; draw $ showOrigin $ square 1
 </code></pre>
-<p><img alt="square with origin" src="img/03-05-square-origin.svg" class="center" /></p>
+<p><img alt="square with origin" src="img/03-05-square-origin.svg" class="img" /></p>
 <p>However when combining diagrams the original origin is maintained.</p>
 <pre><code>λ&gt; draw $ showOrigin $ circle 1 ||| square 1
 </code></pre>
-<p><img alt="circle and square with origin" src="img/03-06-circle-square-origin.svg" class="center" /></p>
+<p><img alt="circle and square with origin" src="img/03-06-circle-square-origin.svg" class="img" /></p>
 <p>Using translate moves the local origin, relative to where the local origin used
 to be at.</p>
 <pre><code>λ&gt; draw $ showOrigin $ circle 1 # translate (r2 (0.5, 0.5))
 </code></pre>
-<p><img alt="circle and square with translated origin" src="img/03-07-translated-origin.svg" class="center" /></p>
+<p><img alt="circle and square with translated origin" src="img/03-07-translated-origin.svg" class="img" /></p>
 <p>But when we combine a translated image with another, it doesn't appear like the
 translation had the effect we expected exactly. It will be a little while before
 we know enough to understand what is going on here exactly.</p>
 <pre><code>λ&gt; draw $ circle 1 ||| circle 1 # translate (r2 (0.5, 0.5))
 </code></pre>
-<p><img alt="combined translated circles" src="img/03-08-combined-translated.svg" class="center" /></p>
+<p><img alt="combined translated circles" src="img/03-08-combined-translated.svg" class="img" /></p>
 <p>However, when we combine images with <code>&lt;&gt;</code> the translation has exactly the effect
 we expected. The local origins of the two diagrams are placed on top of one
 another.</p>
 <pre><code>λ&gt; draw $ circle 1 &lt;&gt; circle 1 # translate (r2 (0.5, 0.5))
 </code></pre>
-<p><img alt="atop translated circles" src="img/03-09-atop-translated.svg" class="center" /></p>
+<p><img alt="atop translated circles" src="img/03-09-atop-translated.svg" class="img" /></p>
 <p>So using <code>&lt;&gt;</code> in addition with <code>translate</code> it is in fact possible to combine
 diagrams however you want, and position them as exactly as desired, to pixel
 perfect precision.</p>
@@ -571,7 +573,7 @@ quite easy to accomplish using <code>.</code> the function composition operator.
 <pre><code>λ&gt; let scaleThenMove = translate (r2 (0.5, 0)) . scale 0.5
 λ&gt; draw $ circle 1 &lt;&gt; circle 1 # scaleThenMove
 </code></pre>
-<p><img alt="two circles" src="img/03-10-two-circles.svg" class="center" /></p>
+<p><img alt="two circles" src="img/03-10-two-circles.svg" class="img" /></p>
 <blockquote>
 <p>Remember we used <code>let</code> in the previous chapter to declare intermediate
 variables.</p>
@@ -593,15 +595,22 @@ both different kinds of boundaries for a diagram.</p>
 <p>In particular you might need to do this for the <code>align</code> and <code>snug</code> commands.</p>
 </blockquote>
 <p>ch3ex1
-<img alt="ex1" src="img/03-ex-01.svg" class="center" /></p>
+<img alt="ex1" src="img/03-ex-01.svg" class="img" /></p>
 <p>ch3ex2
-<img alt="ex2" src="img/03-ex-02.svg" class="center" /></p>
-<p>ch3ex3
-<img alt="ex3" src="img/03-ex-03.svg" class="center" /></p>
-<p>ch3ex4
-<img alt="ex4" src="img/03-ex-04.svg" class="center" /></p>
+<img alt="ex2" src="img/03-ex-02.svg" class="img" /></p>
+<p>ch3ex3</p>
+<blockquote>
+<p>The red dot here is just the result of show origin. You will need the origin
+where it is shown here for the next exercise.</p>
+</blockquote>
+<p><img alt="ex3" src="img/03-ex-03.svg" class="img" /></p>
+<p>ch3ex4</p>
+<blockquote>
+<p>Combine your diagrams from ch3ex2 and ch3ex3 to make this one.</p>
+</blockquote>
+<p><img alt="ex4" src="img/03-ex-04.svg" class="img" /></p>
 <p>ch3ex5
-<img alt="ex5" src="img/03-ex-05.svg" class="center" /></p>
+<img alt="ex5" src="img/03-ex-05.svg" class="img" /></p>
 <a class="header" href="print.html#glossary" id="glossary"><h2>Glossary</h2></a>
 <p>Here is a list of functions that I used in this chapter, or very similar
 functions that you should be able to easily figure out how to use.</p>
