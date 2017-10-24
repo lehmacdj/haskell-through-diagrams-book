@@ -1,2 +1,5 @@
 title = "Haskell Through Diagrams"
 author = "Devin Lehmacher"
+
+[output.html]
+additional-css = ["assets/custom.css"]
