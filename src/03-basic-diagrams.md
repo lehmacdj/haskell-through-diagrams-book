@@ -12,17 +12,17 @@ Load up GHCi while in the project directory then try the following.
 ```
 λ> rendered "triangle" (triangle 1)
 ```
-<img alt="triangle" src="img/03-01-triangle.svg" class="center" />
+<img alt="triangle" src="img/03-01-triangle.svg" class="img" />
 
 ```
 λ> rendered "circle" (circle 1)
 ```
-<img alt="circle" src="img/03-02-circle.svg" class="center" />
+<img alt="circle" src="img/03-02-circle.svg" class="img" />
 
 ```
 λ> rendered "pentagon" (pentagon 1)
 ```
-<img alt="pentagon" src="img/03-03-pentagon.svg" class="center" />
+<img alt="pentagon" src="img/03-03-pentagon.svg" class="img" />
 
 Open "diagrams/triangle.svg", "diagrams/circle.svg", and
 "diagrams/pentagon.svg" and you should see a triangle, circle, and a pentagon.
@@ -33,7 +33,7 @@ Those were all just outlines. What if we want a filled shape instead?
 ```
 λ> draw (fillColor black (triangle 1))
 ```
-<img alt="filled triangle" src="img/03-04-filled-triangle.svg" class="center" />
+<img alt="filled triangle" src="img/03-04-filled-triangle.svg" class="img" />
 
 > `draw` is the same as `rendered "tmp"`. It exists to make it easier to iterate
 > on diagrams for the purpose of this tutorial. You can just open it in a
@@ -181,14 +181,14 @@ diagrams.
 ```
 λ> draw $ showOrigin $ square 1
 ```
-<img alt="square with origin" src="img/03-05-square-origin.svg" class="center" />
+<img alt="square with origin" src="img/03-05-square-origin.svg" class="img" />
 
 However when combining diagrams the original origin is maintained.
 
 ```
 λ> draw $ showOrigin $ circle 1 ||| square 1
 ```
-<img alt="circle and square with origin" src="img/03-06-circle-square-origin.svg" class="center" />
+<img alt="circle and square with origin" src="img/03-06-circle-square-origin.svg" class="img" />
 
 Using translate moves the local origin, relative to where the local origin used
 to be at.
@@ -196,7 +196,7 @@ to be at.
 ```
 λ> draw $ showOrigin $ circle 1 # translate (r2 (0.5, 0.5))
 ```
-<img alt="circle and square with translated origin" src="img/03-07-translated-origin.svg" class="center" />
+<img alt="circle and square with translated origin" src="img/03-07-translated-origin.svg" class="img" />
 
 But when we combine a translated image with another, it doesn't appear like the
 translation had the effect we expected exactly. It will be a little while before
@@ -205,7 +205,7 @@ we know enough to understand what is going on here exactly.
 ```
 λ> draw $ circle 1 ||| circle 1 # translate (r2 (0.5, 0.5))
 ```
-<img alt="combined translated circles" src="img/03-08-combined-translated.svg" class="center" />
+<img alt="combined translated circles" src="img/03-08-combined-translated.svg" class="img" />
 
 However, when we combine images with `<>` the translation has exactly the effect
 we expected. The local origins of the two diagrams are placed on top of one
@@ -214,7 +214,7 @@ another.
 ```
 λ> draw $ circle 1 <> circle 1 # translate (r2 (0.5, 0.5))
 ```
-<img alt="atop translated circles" src="img/03-09-atop-translated.svg" class="center" />
+<img alt="atop translated circles" src="img/03-09-atop-translated.svg" class="img" />
 
 So using `<>` in addition with `translate` it is in fact possible to combine
 diagrams however you want, and position them as exactly as desired, to pixel
@@ -229,7 +229,7 @@ quite easy to accomplish using `.` the function composition operator.
 λ> let scaleThenMove = translate (r2 (0.5, 0)) . scale 0.5
 λ> draw $ circle 1 <> circle 1 # scaleThenMove
 ```
-<img alt="two circles" src="img/03-10-two-circles.svg" class="center" />
+<img alt="two circles" src="img/03-10-two-circles.svg" class="img" />
 
 > Remember we used `let` in the previous chapter to declare intermediate
 > variables.
@@ -252,19 +252,26 @@ exercises for reference.
 > In particular you might need to do this for the `align` and `snug` commands.
 
 ch3ex1
-<img alt="ex1" src="img/03-ex-01.svg" class="center" />
+<img alt="ex1" src="img/03-ex-01.svg" class="img" />
 
 ch3ex2
-<img alt="ex2" src="img/03-ex-02.svg" class="center" />
+<img alt="ex2" src="img/03-ex-02.svg" class="img" />
 
 ch3ex3
-<img alt="ex3" src="img/03-ex-03.svg" class="center" />
+
+> The red dot here is just the result of show origin. You will need the origin
+> where it is shown here for the next exercise.
+
+<img alt="ex3" src="img/03-ex-03.svg" class="img" />
 
 ch3ex4
-<img alt="ex4" src="img/03-ex-04.svg" class="center" />
+
+> Combine your diagrams from ch3ex2 and ch3ex3 to make this one.
+
+<img alt="ex4" src="img/03-ex-04.svg" class="img" />
 
 ch3ex5
-<img alt="ex5" src="img/03-ex-05.svg" class="center" />
+<img alt="ex5" src="img/03-ex-05.svg" class="img" />
 
 ## Glossary
 Here is a list of functions that I used in this chapter, or very similar
