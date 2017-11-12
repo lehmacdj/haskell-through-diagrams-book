@@ -316,9 +316,6 @@ ch3ex4
 
 <img alt="ex4" src="img/03-ex-04.svg" class="img" />
 
-ch3ex5
-<img alt="ex5" src="img/03-ex-05.svg" class="img" />
-
 ## Glossary
 Here is a list of functions that I used in this chapter, or very similar
 functions that you should be able to easily figure out how to use.
