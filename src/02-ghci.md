@@ -309,4 +309,4 @@ of information and documentation about whatever you throw at it.
 `Integer` `Int` `Float` `Double` `Char` `String` `Bool`
 
 #### Constraints
-`Floating` `Integral` `Num` `Float`
+`Floating` `Integral` `Num` `Fractional`
