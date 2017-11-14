@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
+git diff --quiet --ignore-submodules HEAD &>/dev/null || DIRTY=1
+
 cargo >/dev/null 2>&1 || (echo "cargo / rust is not installed!" && exit 1)
 mdbook --help >/dev/null 2>&1 || cargo install mdbook
 mdbook build
-git stash
+[ $DIRTY ] && git stash
 git checkout gh-pages
 mv book .book
 mv haskell-through-diagrams .haskell-through-diagrams
@@ -16,4 +18,4 @@ mv .haskell-through-diagrams haskell-through-diagrams
 git commit -m "update published book pages" || :
 git push || :
 git checkout master
-git stash pop
+[ $DIRTY ] && git stash pop
